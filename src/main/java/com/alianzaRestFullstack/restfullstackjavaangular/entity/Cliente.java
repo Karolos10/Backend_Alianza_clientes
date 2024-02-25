@@ -11,7 +11,9 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "shared_key")
     private String sharedKey;
+    @Column(name = "nombre_completo")
     private String nombreCompleto;
     @Column(unique = true, nullable = false)
     private String email;

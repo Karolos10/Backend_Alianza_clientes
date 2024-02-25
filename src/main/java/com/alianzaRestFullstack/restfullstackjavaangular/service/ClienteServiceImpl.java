@@ -6,6 +6,7 @@ import com.alianzaRestFullstack.restfullstackjavaangular.repository.ClienteRepos
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,10 +48,11 @@ public class ClienteServiceImpl implements ClienteService{
 
     @Override
     public List<Cliente> findByWordKey(String palabraClave){
+        List<Cliente> result = new ArrayList<>();
         if(palabraClave != null){
-            //return clienteRepository.findAll(palabraClave);
+            result = clienteRepository.findAll(palabraClave);
         }
-        return clienteRepository.findAll(palabraClave);
+        return result;
     }
 
     @Override

@@ -2,10 +2,13 @@ package com.alianzaRestFullstack.restfullstackjavaangular.controller;
 
 import com.alianzaRestFullstack.restfullstackjavaangular.entity.Cliente;
 import com.alianzaRestFullstack.restfullstackjavaangular.service.ClienteService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("*")
@@ -16,6 +19,27 @@ public class ClienteController {
 
     public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;
+    }
+
+    @GetMapping("/exportar-csv")
+    public ResponseEntity<String> exportarCSV() {
+        List<Cliente> clientes = clienteService.findAll();
+
+        try {
+            // Convertir la lista de clientes a un formato CSV (puedes usar alguna librería como OpenCSV)
+            // Aquí se muestra un ejemplo simple
+            String csvData = clientes.stream()
+                    .map(cliente -> cliente.getNombreCompleto() + "," + cliente.getEmail() + "," + cliente.getFecha() + "," + cliente.getSharedKey() + "," + cliente.getTelefono())
+                    .collect(Collectors.joining("\n"));
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.CONTENT_TYPE, "text/csv");
+            headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=clientes.csv");
+
+            return new ResponseEntity<>(csvData, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al exportar a CSV", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping
@@ -31,7 +55,7 @@ public class ClienteController {
     @GetMapping("/buscar")
     public ResponseEntity<List<Cliente>> findBywordker(@RequestParam String palabraClave){
         List<Cliente> clientes = clienteService.findByWordKey(palabraClave);
-        return null;
+        return ResponseEntity.ok(clientes);
     }
 
     @PutMapping
@@ -47,6 +71,11 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Integer id){
         clienteService.deleteById(id);
+    }
+
+    @GetMapping("/{id}")
+    public Cliente getById(@PathVariable Integer id){
+        return clienteService.findById(id);
     }
 
     @GetMapping("bySharedKey/{sharedKey}")
