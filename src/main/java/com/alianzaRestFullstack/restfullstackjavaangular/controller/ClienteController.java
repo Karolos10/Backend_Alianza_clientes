@@ -2,11 +2,14 @@ package com.alianzaRestFullstack.restfullstackjavaangular.controller;
 
 import com.alianzaRestFullstack.restfullstackjavaangular.entity.Cliente;
 import com.alianzaRestFullstack.restfullstackjavaangular.service.ClienteService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
+@RequestMapping("api/clientes")
 public class ClienteController {
 
     private final ClienteService clienteService;
@@ -15,7 +18,7 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    @PostMapping("/createClientes")
+    @PostMapping
     public Cliente save(@RequestBody Cliente cliente){
         return clienteService.save(cliente);
     }
@@ -23,6 +26,12 @@ public class ClienteController {
     @GetMapping
     public List<Cliente> findAll(){
         return clienteService.findAll();
+    }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Cliente>> findBywordker(@RequestParam String palabraClave){
+        List<Cliente> clientes = clienteService.findByWordKey(palabraClave);
+        return null;
     }
 
     @PutMapping

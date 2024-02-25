@@ -46,6 +46,14 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     @Override
+    public List<Cliente> findByWordKey(String palabraClave){
+        if(palabraClave != null){
+            //return clienteRepository.findAll(palabraClave);
+        }
+        return clienteRepository.findAll(palabraClave);
+    }
+
+    @Override
     public Cliente findById(Integer id) {
         Cliente cliente = clienteRepository.findById(id).orElseThrow(
                 () ->{

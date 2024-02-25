@@ -16,12 +16,12 @@ public class Cliente {
     @Column(unique = true, nullable = false)
     private String email;
     private String telefono;
-    private Date fecha;
+    private String fecha;
 
     public Cliente() {
     }
 
-    public Cliente(Integer id, String sharedKey, String nombreCompleto, String email, String telefono, Date fecha) {
+    public Cliente(Integer id, String sharedKey, String nombreCompleto, String email, String telefono, String fecha) {
         this.id = id;
         this.sharedKey = sharedKey;
         this.nombreCompleto = nombreCompleto;
@@ -70,11 +70,11 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 }

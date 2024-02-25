@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface ClienteService {
     Cliente save(Cliente cliente);
     List<Cliente> findAll();
+    List<Cliente> findByWordKey(String palabraClave);
     Cliente findById (Integer id);
     //Cliente findByNombreCompleto(String nombreCompleto);
     void deleteById(Integer id);
