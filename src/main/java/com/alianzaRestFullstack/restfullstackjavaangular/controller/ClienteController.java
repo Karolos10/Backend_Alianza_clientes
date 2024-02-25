@@ -52,9 +52,9 @@ public class ClienteController {
         return clienteService.findAll();
     }
 
-    @GetMapping("/buscar")
-    public ResponseEntity<List<Cliente>> findBywordker(@RequestParam String palabraClave){
-        List<Cliente> clientes = clienteService.findByWordKey(palabraClave);
+    @GetMapping("/search")
+    public ResponseEntity<List<Cliente>> findBywordker(@RequestParam String keyWord){
+        List<Cliente> clientes = clienteService.findByWordKey(keyWord);
         return ResponseEntity.ok(clientes);
     }
 
